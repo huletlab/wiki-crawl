@@ -4,6 +4,7 @@ import getpass
 from pprint import pprint
 
 import os
+import argparse
 
 #p = getpass.getpass()
 p='strontium90'
@@ -12,8 +13,27 @@ site = mwclient.Site('atomcool.rice.edu', path='/atomwiki/')
 site.login('lithium',p)
 
 
-for root, dirs, files in os.walk('/home/pmd'):
-   print "root = %s, dirs = %s, files = %s", (root, dirs,files)
+if __name__ == "__main__":
+   parser = argparse.ArgumentParser('wiki-crawl.py')
+   parser.add_argument('path',action="store",type=str, help='path to start the crawl')
+   args=parser.parse_args() 
+  
+   count = 0 
+   for root, dirs, files in os.walk(args.path):
+      for name in files: 
+         if count < 5:
+            fname = os.path.join(root, name)
+            print  "Found ", fname
+            print os.path.split( fname )[0].replace( args.path, '', 1).split(os.sep)
+            print fname.replace( args.path, '', 1).split(os.sep)
+            print  fname.split(os.sep)
+            count = count + 1
+         
+      #print root, "consumes",
+      #print sum(os.path.getsize( os.path.join( root, name)) for name in files),
+      #print "bytes in", len(files), "non-directory files"
+      #if 'CVS' in dirs:
+      #   dirs.remove('CVS') #don't visit CVS directories.
 
 exit(1)
 
