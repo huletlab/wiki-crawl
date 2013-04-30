@@ -8,8 +8,7 @@ import argparse
 import sortedWalk
 import mw_templates as mwt
 
-#p = getpass.getpass()
-p='strontium90'
+p = getpass.getpass()
 site = mwclient.Site('atomcool.rice.edu', path='/atomwiki/')
 site.login('lithium',p)
 
